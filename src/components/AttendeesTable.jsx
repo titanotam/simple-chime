@@ -18,12 +18,12 @@ export default function AttendeesTable({ attendees, onRemove }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="simple table">
-        <TableHead>
+        {/* <TableHead>
           <TableRow>
             <TableCell><Typography fontWeight={'bold'}>Username</Typography></TableCell>
             <TableCell width={50}><Typography fontWeight={'bold'}>Remove</Typography></TableCell>
           </TableRow>
-        </TableHead>
+        </TableHead> */}
         <TableBody>
           {attendees.map((attendee, idx) => (
             <TableRow
@@ -31,7 +31,7 @@ export default function AttendeesTable({ attendees, onRemove }) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell>{attendee}</TableCell>
-              <TableCell>
+              <TableCell width={40}>
                 <Button size="small" color="error" type="button" onClick={() => onRemove(attendee)}>
                   <DeleteIcon fontSize='small' />
                 </Button>

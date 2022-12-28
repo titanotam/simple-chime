@@ -16,6 +16,14 @@ export function createMeeting(organizer, roomName) {
   });
 }
 
+export function removeMeeting(meetingId) {
+  return axiosInstance.delete(endpoint + `/${meetingId}`, {
+    data: {
+      MeetingId: meetingId
+    }
+  });
+}
+
 export function addAttendees(meetingId, attendees) {
   return axiosInstance.post(attendeeEndpoint, {
     data: {

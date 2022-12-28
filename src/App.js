@@ -10,7 +10,7 @@ import {
 } from "amazon-chime-sdk-js";
 import { useEffect, useState } from "react";
 import { login } from './api/authApi';
-import { addAttendees, createMeeting, removeAttendee, saveLocalMeeting } from './api/meetingApi';
+import { addAttendees, createMeeting, deleteLocalMeeting, getLocalMeeting, removeAttendee, removeMeeting, saveLocalMeeting } from './api/meetingApi';
 import AddAttendees from './components/AddAttendees';
 import AudioOutput from './components/AudioOutput';
 import Controls from './components/Controls';
@@ -59,6 +59,17 @@ export default function App() {
       .then(() => { })
       .catch(() => { });
   };
+
+  const handleLeave = async () => {
+    setFinishedApplication(true)
+
+    if (user.username === 'tamhuynh1@flodev.net') {
+      try {
+        const localMeeting = await getLocalMeeting();
+        closeMeeting(localMeeting)
+      } catch (error) { }
+    }
+  }
 
   useEffect(() => {
     if (!meetingSession) {
@@ -170,7 +181,7 @@ export default function App() {
               <Controls
                 meetingSession={meetingSession}
                 room={joining}
-                onLeave={() => setFinishedApplication(true)}
+                onLeave={handleLeave}
               />
               {meetingSession && user.username === 'tamhuynh1@flodev.net' && (
                 <SectionBox heading="Attendees">
@@ -215,6 +226,17 @@ async function createMeetingSession(joiningFormData, user) {
   );
 
   return meetingSession;
+}
+
+async function closeMeeting(localMeeting) {
+  if (!localMeeting) {
+    return;
+  }
+
+  await removeMeeting(localMeeting.Meeting.MeetingId)
+  await deleteLocalMeeting();
+
+  return true;
 }
 
 async function addAttendeesToMeeting(formData) {

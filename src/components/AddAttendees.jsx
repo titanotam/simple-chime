@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, Select, Typography } from '@mui/material';
+import { Box, Button, Container, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getLocalMeeting } from '../api/meetingApi';
 import { USER } from '../Consts';
@@ -73,14 +73,15 @@ export default function AddAttendees({ onAdd, onRemove }) {
   }
 
   return (
-    <>
+    <Container maxWidth="xs">
       <AttendeesTable attendees={addedAttendees} onRemove={removeAttendee} />
       <Box component="form" onSubmit={handleSubmit} marginTop="10px">
+        <InputLabel id="username-select-label">Username</InputLabel>
         <Select
           labelId="username-select-label"
           id="username-select"
           value={selected}
-          label="Username"
+          label=""
           onChange={handleChange}
           fullWidth
           required
@@ -95,6 +96,6 @@ export default function AddAttendees({ onAdd, onRemove }) {
           </Button>
         </Box>
       </Box>
-    </>
+    </Container>
   );
 }
