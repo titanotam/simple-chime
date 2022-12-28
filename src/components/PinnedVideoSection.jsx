@@ -24,7 +24,7 @@ export default function PinnedVideoSection({ isHost }) {
       ref={videoRef}
       id="video-pinned"
       aria-label="Pinned video"
-      style={{ maxHeight: !isHost ? "80vh" : '30vh', objectFit: "contain" }}
+      style={{ maxHeight: !isHost ? "80vh" : '20vh', objectFit: "contain" }}
       width={undefined}
       height={undefined}
     />
