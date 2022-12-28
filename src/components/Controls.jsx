@@ -3,9 +3,15 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 //import VideocamIcon from "@mui/icons-material/Videocam";
 //import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import { Button, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { SectionBox } from '../ui-components';
 
 export default function Controls({ meetingSession, room, onLeave }) {
+  const [isAudioMute, setIsAudioMute] = useState(false)
+  useEffect(() => {
+    setIsAudioMute(meetingSession.audioVideo.realtimeIsLocalAudioMuted())
+  }, [meetingSession.audioVideo])
+
   const muteAudio = () => meetingSession.audioVideo.realtimeMuteLocalAudio();
 
   const unmuteAudio = () =>
@@ -36,12 +42,12 @@ export default function Controls({ meetingSession, room, onLeave }) {
       <Typography component="strong" variant="body1">
         (Room {room})
       </Typography>
-      <Button type="button" onClick={muteAudio}>
+      {!isAudioMute && <Button type="button" onClick={muteAudio}>
         <MicOffIcon title="Mute audio" aria-label="Mute audio" />
-      </Button>
-      <Button type="button" onClick={unmuteAudio}>
+      </Button>}
+      {isAudioMute && <Button type="button" onClick={unmuteAudio}>
         <MicIcon title="Mute audio" aria-label="Unmute audio" />
-      </Button>
+      </Button>}
       {/* <Button type="button" onClick={muteVideo}>
         <VideocamOffIcon title="Mute audio" aria-label="Mute audio" />
       </Button>

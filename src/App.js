@@ -154,11 +154,11 @@ export default function App() {
               <StreamingVideosSection meetingSession={meetingSession} />
               <AudioOutput meetingSession={meetingSession} />
               <PinnedVideoSection />
-              <Controls
+              {meetingSession && <Controls
                 meetingSession={meetingSession}
                 room={joining}
                 onLeave={() => setFinishedApplication(true)}
-              />
+              />}
             </>
           )}
         </Box>
