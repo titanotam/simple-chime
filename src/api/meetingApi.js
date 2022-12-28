@@ -9,6 +9,7 @@ export function createMeeting(organizer, roomName) {
     data: {
       Organizer: organizer,
       Attendees: USER.map(x => x.email),
+      //Attendees: [organizer],
       ExternalMeetingId: roomName,
     },
   });
