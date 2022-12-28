@@ -141,10 +141,11 @@ export default function App() {
           {hadFinishedApplication && (
             <Container>
               <SectionBox heading="Bye, bye!">
-                You can close this window now or...{" "}
-                <Button variant="text" onClick={() => window.location.reload()}>
-                  start another meeting
-                </Button>
+                <Typography component='p' variant='body1' textAlign={'center'} marginTop='20px'>You can close this window now or...{" "}
+                  <Button variant="text" onClick={() => window.location.reload()}>
+                    start another meeting
+                  </Button>
+                </Typography>
               </SectionBox>
             </Container>
           )}
