@@ -36,12 +36,12 @@ export default function Controls({ meetingSession, room, onLeave }) {
       <Typography component="strong" variant="body1">
         (Room {room})
       </Typography>
-      {!meetingSession.audioVideo.realtimeIsLocalAudioMuted() && <Button type="button" onClick={muteAudio}>
+      <Button type="button" onClick={muteAudio}>
         <MicOffIcon title="Mute audio" aria-label="Mute audio" />
-      </Button>}
-      {meetingSession.audioVideo.realtimeIsLocalAudioMuted() && <Button type="button" onClick={unmuteAudio}>
+      </Button>
+      <Button type="button" onClick={unmuteAudio}>
         <MicIcon title="Mute audio" aria-label="Unmute audio" />
-      </Button>}
+      </Button>
       {/* <Button type="button" onClick={muteVideo}>
         <VideocamOffIcon title="Mute audio" aria-label="Mute audio" />
       </Button>
