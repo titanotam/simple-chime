@@ -18,8 +18,8 @@ export const MainHeader = () => (
 export const PeerBox = ({ enabled, ...props }) => (
   <Box
     display={enabled ? "inline-block" : "none"}
-    width="200px"
-    height="150px"
+    width="50px"
+    height="50px"
     backgroundColor="black"
     margin="10px"
     {...props}
