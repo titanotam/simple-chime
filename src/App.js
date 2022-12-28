@@ -10,7 +10,8 @@ import {
 } from "amazon-chime-sdk-js";
 import { useEffect, useState } from "react";
 import { login } from './api/authApi';
-import { createMeeting, saveLocalMeeting } from './api/meetingApi';
+import { addAttendees, createMeeting, saveLocalMeeting } from './api/meetingApi';
+import AddAttendees from './components/AddAttendees';
 import AudioOutput from './components/AudioOutput';
 import Controls from './components/Controls';
 import JoiningMeeting from './components/JoiningMeeting';
@@ -45,6 +46,12 @@ export default function App() {
     createMeetingSession(joiningFormData, user)
       .then((it) => setMeetingSession(it))
       .catch(() => setJoining(""));
+  };
+
+  const handleAddAttendees = (formData) => {
+    addAttendeesToMeeting(formData)
+      .then(() => { })
+      .catch(() => { });
   };
 
   useEffect(() => {
@@ -136,6 +143,11 @@ export default function App() {
               <SectionBox heading="Joining...">
                 <Typography component='p' variant='body1' textAlign={'center'} marginTop='20px'>Attempting to join <code>{joining}</code> meeting.</Typography>
               </SectionBox>
+              {meetingSession && user.username === 'tamhuynh1@flodev.net' && (
+                <SectionBox heading="Add Attendees">
+                  <AddAttendees onAdd={handleAddAttendees} />
+                </SectionBox>
+              )}
             </Container>
           )}
           {hadFinishedApplication && (
@@ -197,4 +209,22 @@ async function createMeetingSession(joiningFormData, user) {
   );
 
   return meetingSession;
+}
+
+async function addAttendeesToMeeting(formData) {
+  if (!formData.localMeeting) {
+    return;
+  }
+
+  const found = formData.localMeeting.Attendees.find(x => x.ExternalUserId === formData.attendee);
+  if (found) {
+    return;
+  }
+
+  const attendees = await addAttendees(formData.localMeeting.Meeting.MeetingId, [formData.attendee]);
+  let meetingInfo = formData.localMeeting;
+  meetingInfo.Attendees = meetingInfo.Attendees.concat(attendees.Attendees)
+  await saveLocalMeeting(meetingInfo);
+
+  return true;
 }

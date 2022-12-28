@@ -2,15 +2,25 @@ import { USER } from '../Consts';
 import axiosInstance from './apiUtil';
 
 const endpoint = process.env.REACT_APP_API_URL + '/meetings';
+const attendeeEndpoint = process.env.REACT_APP_API_URL + '/attendees';
 const localApiEndpoint = process.env.REACT_APP_LOCAL_API_URL;
 
 export function createMeeting(organizer, roomName) {
   return axiosInstance.post(endpoint, {
     data: {
       Organizer: organizer,
-      Attendees: USER.map(x => x.email),
-      //Attendees: [organizer],
+      //Attendees: USER.map(x => x.email),
+      Attendees: [organizer],
       ExternalMeetingId: roomName,
+    },
+  });
+}
+
+export function addAttendees(meetingId, attendees) {
+  return axiosInstance.post(attendeeEndpoint, {
+    data: {
+      MeetingId: meetingId,
+      Attendees: attendees
     },
   });
 }

@@ -50,12 +50,12 @@ export default function Controls({ meetingSession, room, onLeave }) {
       <Button type="button" onClick={unmuteAudio}>
         <MicIcon title="Mute audio" aria-label="Unmute audio" />
       </Button>
-      <Button type="button" onClick={muteVideo}>
+      {/* <Button type="button" onClick={muteVideo}>
         <VideocamOffIcon title="Mute audio" aria-label="Mute audio" />
       </Button>
       <Button type="button" onClick={unmuteVideo}>
         <VideocamIcon title="Mute audio" aria-label="Unmute video" />
-      </Button>
+      </Button> */}
       <Button type="button" color="error" onClick={stopCall}>
         <Typography component="strong">End</Typography>
       </Button>

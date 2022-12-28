@@ -50,7 +50,7 @@ export const SectionBox = ({ heading, children, ...props }) => (
 );
 
 export const Container = ({ children, ...props }) => (
-  <MuiContainer maxWidth="xs" style={{ height: '100vh', display: 'flex', alignItems: 'center' }} {...props}>
+  <MuiContainer maxWidth="xs" style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} {...props}>
     {children}
   </MuiContainer>
 )

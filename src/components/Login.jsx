@@ -16,11 +16,8 @@ export default function Login({ onLogin }) {
     try {
       const localMeeting = await getLocalMeeting();
       if (localMeeting && localMeeting.Attendees && localMeeting.Attendees.length) {
-        const hasHost = localMeeting.Attendees.find(x => x.ExternalUserId === 'tamhuynh1@flodev.net')
-        if (hasHost) {
-          const noHost = USER.filter(x => x.id !== 'tamhuynh1');
-          setAttendees(noHost)
-        }
+        const noHost = USER.filter(x => x.id !== 'tamhuynh1');
+        setAttendees(noHost)
       }
     } catch (error) {
       const host = USER.filter(x => x.id === 'tamhuynh1');
