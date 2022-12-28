@@ -141,7 +141,7 @@ export default function App() {
           )}
           {!hadFinishedApplication && !isInSession && !joining && user && (
             <Container>
-              <JoiningMeeting onJoin={handleJoin} />
+              <JoiningMeeting onJoin={handleJoin} user={user} />
             </Container>
           )}
           {!hadFinishedApplication && !isInSession && joining && user && (
@@ -149,11 +149,6 @@ export default function App() {
               <SectionBox heading="Joining...">
                 <Typography component='p' variant='body1' textAlign={'center'} marginTop='20px'>Attempting to join <code>{joining}</code> meeting.</Typography>
               </SectionBox>
-              {meetingSession && user.username === 'tamhuynh1@flodev.net' && (
-                <SectionBox heading="Attendees">
-                  <AddAttendees onAdd={handleAddAttendees} onRemove={handleRemoveAttendees} />
-                </SectionBox>
-              )}
             </Container>
           )}
           {hadFinishedApplication && (
@@ -171,12 +166,17 @@ export default function App() {
             <>
               <StreamingVideosSection meetingSession={meetingSession} />
               <AudioOutput meetingSession={meetingSession} />
-              <PinnedVideoSection />
+              <PinnedVideoSection isHost={meetingSession && user.username === 'tamhuynh1@flodev.net'} />
               <Controls
                 meetingSession={meetingSession}
                 room={joining}
                 onLeave={() => setFinishedApplication(true)}
               />
+              {meetingSession && user.username === 'tamhuynh1@flodev.net' && (
+                <SectionBox heading="Attendees">
+                  <AddAttendees onAdd={handleAddAttendees} onRemove={handleRemoveAttendees} />
+                </SectionBox>
+              )}
             </>
           )}
         </Box>

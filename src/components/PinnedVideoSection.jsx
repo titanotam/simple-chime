@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Video } from '../ui-components';
 import { copyStreamToPinnedVideo } from '../Util';
 
-export default function PinnedVideoSection() {
+export default function PinnedVideoSection({ isHost }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function PinnedVideoSection() {
       ref={videoRef}
       id="video-pinned"
       aria-label="Pinned video"
-      style={{ maxHeight: "80vh", objectFit: "contain" }}
+      style={{ maxHeight: !isHost ? "80vh" : '30vh', objectFit: "contain" }}
       width={undefined}
       height={undefined}
     />
