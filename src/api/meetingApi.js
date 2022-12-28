@@ -1,3 +1,4 @@
+import { USER } from '../Consts';
 import axiosInstance from './apiUtil';
 
 const endpoint = process.env.REACT_APP_API_URL + '/meetings';
@@ -7,11 +8,7 @@ export function createMeeting(organizer, roomName) {
   return axiosInstance.post(endpoint, {
     data: {
       Organizer: organizer,
-      Attendees: [
-        "tamhuynh1@flodev.net",
-        "tamhuynh2@flodev.net",
-        "tamhuynh3@flodev.net",
-      ],
+      Attendees: USER.map(x => x.email),
       ExternalMeetingId: roomName,
     },
   });

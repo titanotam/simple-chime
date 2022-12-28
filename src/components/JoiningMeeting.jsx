@@ -35,19 +35,19 @@ export default function JoiningMeeting({ onJoin }) {
       <Typography component="h1" variant="h4" marginTop="10px" textAlign={'center'}>
         Start or join a conference
       </Typography>
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box component="form" onSubmit={handleSubmit} marginTop="20px">
         {!!localMeeting && <>
-          <Typography component="p" variant="body1" marginTop="10px">
+          <Typography component="p" variant="body1">
             Organizer: tamhuynh1@flodev.net
           </Typography>
-          <Typography component="p" variant="body1" marginTop="10px">
+          <Typography component="p" variant="body1" marginTop="20px">
             Room Name: {localMeeting.Meeting.ExternalMeetingId}
           </Typography>
         </>
         }
         {!localMeeting && <TextField
           name="room"
-          label="Conference room"
+          label="Room name"
           placeholder="Enter any alphanumeric id..."
           maxLength="64"
           minLength="2"

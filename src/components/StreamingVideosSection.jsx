@@ -111,6 +111,8 @@ export default function StreamingVideosSection({ meetingSession }) {
           <Video
             ref={localVideoRef}
             className="streaming-video streaming-video-local"
+            width="50px"
+            height="50px"
           />
         </PeerBox>
         {videoSlotsRef.current.map((slot, index) => (
@@ -122,6 +124,8 @@ export default function StreamingVideosSection({ meetingSession }) {
             <Video
               ref={(video) => (slot.video = video)}
               className="streaming-video streaming-video-remote"
+              width="50px"
+              height="50px"
             />
           </PeerBox>
         ))}

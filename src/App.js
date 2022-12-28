@@ -1,5 +1,5 @@
 
-import { Box, Button, Container } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
@@ -18,7 +18,8 @@ import Login from './components/Login';
 import PinnedVideoSection from './components/PinnedVideoSection';
 import StreamingVideosSection from './components/StreamingVideosSection';
 import {
-  SectionBox
+  SectionBox,
+  Container
 } from "./ui-components";
 import { copyStreamToPinnedVideo } from './Util';
 
@@ -121,24 +122,24 @@ export default function App() {
       <Box width="100vw" height="100vh" overflow="hidden">
         <Box component="main" display="flex" flexDirection="column">
           {!hadFinishedApplication && !isInSession && !joining && !user && (
-            <Container maxWidth="xs">
+            <Container>
               <Login onLogin={handleLogin} />
             </Container>
           )}
           {!hadFinishedApplication && !isInSession && !joining && user && (
-            <Container maxWidth="xs">
+            <Container>
               <JoiningMeeting onJoin={handleJoin} />
             </Container>
           )}
           {!hadFinishedApplication && !isInSession && joining && user && (
-            <Container maxWidth="xs">
+            <Container>
               <SectionBox heading="Joining...">
-                Attempting to join <code>{joining}</code> meeting.
+                <Typography component='p' variant='body1' textAlign={'center'} marginTop='20px'>Attempting to join <code>{joining}</code> meeting.</Typography>
               </SectionBox>
             </Container>
           )}
           {hadFinishedApplication && (
-            <Container maxWidth="xs">
+            <Container>
               <SectionBox heading="Bye, bye!">
                 You can close this window now or...{" "}
                 <Button variant="text" onClick={() => window.location.reload()}>

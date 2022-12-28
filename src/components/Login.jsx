@@ -1,15 +1,10 @@
 import { Box, Button, MenuItem, Select, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getLocalMeeting } from '../api/meetingApi';
+import { USER } from '../Consts';
 import { SectionBox } from '../ui-components';
 
 export default function Login({ onLogin }) {
-  const USER = {
-    tamhuynh1: process.env.REACT_APP_RSA_1,
-    tamhuynh2: process.env.REACT_APP_RSA_2,
-    tamhuynh3: process.env.REACT_APP_RSA_3,
-  };
-
   const [selected, setSelected] = useState('');
   const [attendees, setAttendees] = useState([]);
 
@@ -21,27 +16,15 @@ export default function Login({ onLogin }) {
     try {
       const localMeeting = await getLocalMeeting();
       if (localMeeting && localMeeting.Attendees && localMeeting.Attendees.length) {
-        const found = localMeeting.Attendees.find(x => x.ExternalUserId === 'tamhuynh1@flodev.net')
-        if (found) {
-          setAttendees([
-            {
-              id: 'tamhuynh2',
-              name: 'tamhuynh2@flodev.net'
-            },
-            {
-              id: 'tamhuynh3',
-              name: 'tamhuynh3@flodev.net'
-            }
-          ])
+        const hasHost = localMeeting.Attendees.find(x => x.ExternalUserId === 'tamhuynh1@flodev.net')
+        if (hasHost) {
+          const noHost = USER.filter(x => x.id !== 'tamhuynh1');
+          setAttendees(noHost)
         }
       }
     } catch (error) {
-      setAttendees([
-        {
-          id: 'tamhuynh1',
-          name: 'tamhuynh1@flodev.net'
-        }
-      ])
+      const host = USER.filter(x => x.id === 'tamhuynh1');
+      setAttendees(host)
     }
   }
 
@@ -52,9 +35,10 @@ export default function Login({ onLogin }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const found = USER.find(x => x.id === selected)
     const loginFormData = {
-      username: selected + '@flodev.net',
-      password: USER[selected]
+      username: found.email,
+      password: found.rsa
     };
     onLogin(loginFormData);
   };
@@ -75,7 +59,7 @@ export default function Login({ onLogin }) {
           required
         >
           {attendees.map((att, ind) => {
-            return <MenuItem key={ind} value={att.id}>{att.name}</MenuItem>
+            return <MenuItem key={ind} value={att.id}>{att.email}</MenuItem>
           })}
         </Select>
         <Box marginTop="20px">

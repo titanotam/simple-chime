@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Container as MuiContainer } from "@mui/material";
 import { forwardRef } from "react";
 
 export const MainHeader = () => (
@@ -41,10 +41,16 @@ export const InvisibleAudio = forwardRef((props, ref) => (
 ));
 
 export const SectionBox = ({ heading, children, ...props }) => (
-  <Box component="section" paddingTop="10px" paddingBottom="10px" {...props}>
-    <Typography component="h2" variant="h5">
+  <Box component="section" paddingTop="10px" paddingBottom="10px" width={'100%'} {...props}>
+    <Typography component="h2" variant="h5" textAlign={'center'}>
       {heading}
     </Typography>
     {children}
   </Box>
 );
+
+export const Container = ({ children, ...props }) => (
+  <MuiContainer maxWidth="xs" style={{ height: '100vh', display: 'flex', alignItems: 'center' }} {...props}>
+    {children}
+  </MuiContainer>
+)
