@@ -14,7 +14,7 @@ export default function Controls({ meetingSession, room, onLeave }) {
   const muteVideo = () => meetingSession.audioVideo.stopVideoInput();
 
   const unmuteVideo = async () => {
-    console.error("Not implemented yet!");
+    meetingSession.audioVideo.startVideoInput();
   };
 
   const stopCall = async () => {
