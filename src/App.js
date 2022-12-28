@@ -10,7 +10,7 @@ import {
 } from "amazon-chime-sdk-js";
 import { useEffect, useState } from "react";
 import { login } from './api/authApi';
-import { addAttendees, createMeeting, saveLocalMeeting } from './api/meetingApi';
+import { addAttendees, createMeeting, removeAttendee, saveLocalMeeting } from './api/meetingApi';
 import AddAttendees from './components/AddAttendees';
 import AudioOutput from './components/AudioOutput';
 import Controls from './components/Controls';
@@ -50,6 +50,12 @@ export default function App() {
 
   const handleAddAttendees = (formData) => {
     addAttendeesToMeeting(formData)
+      .then(() => { })
+      .catch(() => { });
+  };
+
+  const handleRemoveAttendees = (formData) => {
+    removeAttendeesFromMeeting(formData)
       .then(() => { })
       .catch(() => { });
   };
@@ -144,8 +150,8 @@ export default function App() {
                 <Typography component='p' variant='body1' textAlign={'center'} marginTop='20px'>Attempting to join <code>{joining}</code> meeting.</Typography>
               </SectionBox>
               {meetingSession && user.username === 'tamhuynh1@flodev.net' && (
-                <SectionBox heading="Add Attendees">
-                  <AddAttendees onAdd={handleAddAttendees} />
+                <SectionBox heading="Attendees">
+                  <AddAttendees onAdd={handleAddAttendees} onRemove={handleRemoveAttendees} />
                 </SectionBox>
               )}
             </Container>
@@ -224,6 +230,24 @@ async function addAttendeesToMeeting(formData) {
   const attendees = await addAttendees(formData.localMeeting.Meeting.MeetingId, [formData.attendee]);
   let meetingInfo = formData.localMeeting;
   meetingInfo.Attendees = meetingInfo.Attendees.concat(attendees.Attendees)
+  await saveLocalMeeting(meetingInfo);
+
+  return true;
+}
+
+async function removeAttendeesFromMeeting(formData) {
+  if (!formData.localMeeting) {
+    return;
+  }
+
+  const foundIndex = formData.localMeeting.Attendees.findIndex(x => x.ExternalUserId === formData.attendee);
+  if (foundIndex === -1) {
+    return;
+  }
+
+  await removeAttendee(formData.localMeeting.Meeting.MeetingId, formData.localMeeting.Attendees[foundIndex].AttendeeId);
+  let meetingInfo = formData.localMeeting;
+  meetingInfo.Attendees = meetingInfo.Attendees.filter(x => x.AttendeeId !== formData.localMeeting.Attendees[foundIndex].AttendeeId)
   await saveLocalMeeting(meetingInfo);
 
   return true;

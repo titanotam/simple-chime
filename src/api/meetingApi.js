@@ -25,6 +25,10 @@ export function addAttendees(meetingId, attendees) {
   });
 }
 
+export function removeAttendee(meetingId, attendeeId) {
+  return axiosInstance.delete(`${endpoint}/${meetingId}/attendees/${attendeeId}`);
+}
+
 export function getAttendee(meetingId, attendeeId) {
   return axiosInstance.get(`${endpoint}/${meetingId}/attendees/${attendeeId}`);
 }
